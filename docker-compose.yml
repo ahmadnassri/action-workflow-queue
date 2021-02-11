@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # ---- super-linter ---- #
+  lint:
+    image: github/super-linter:v3
+    volumes:
+      - ./:/tmp/lint
+    environment:
+      RUN_LOCAL: 'true'
+      LOG_LEVEL: 'ERROR'
+      MULTI_STATUS: 'false'
+
+  # ---- readme generator ---- #
+  readme:
+    image: pandoc/core:2.11.4
+    volumes:
+      - ./:/data
+    command: >-
+      --metadata-file=colophon.yml
+      --template=docs/README.template
+      --output=README.md
+      --from=gfm
+      --to=gfm
+      --fail-if-warnings
+      --wrap=preserve
+      docs/README.md
+
+  test:
+    build: .
+    tty: true
+    volumes:
+      - type: bind
+        source: ./action
+        target: /action/
+    working_dir: /action
+    entrypoint: npm run
+    command: test
