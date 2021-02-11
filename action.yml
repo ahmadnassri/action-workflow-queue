@@ -1,0 +1,23 @@
+name: Workflow Queue
+description: If the same workflow is already running from a previous commit, wait for it to finish
+
+branding:
+  color: yellow
+  icon: clock
+
+inputs:
+  github-token:
+    description: The GitHub token used to post comments on pull requests
+    default: ${{ github.token }}
+
+  timeout:
+    description: timeout before we stop trying (in milliseconds)
+    default: 600000
+
+  delay:
+    description: delay between status checks (in milliseconds)
+    default: 10000
+
+runs:
+  using: docker
+  image: docker://ghcr.io/ahmadnassri/action-workflow-queue

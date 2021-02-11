@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "actions-workflow-queue",
+  "version": "0.0.0-semantically-released",
+  "description": "wait for all `workflow_run` required workflows to be successful",
+  "author": {
+    "name": "Ahmad Nassri",
+    "email": "ahmad@ahmadnassri.com",
+    "url": "https://ahmadnassri.com"
+  },
+  "scripts": {
+    "test": "echo nothing to test && exit 0",
+    "test:ci": "echo nothing to test && exit 0"
+  },
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "yaml": "^1.10.0"
+  }
+}
