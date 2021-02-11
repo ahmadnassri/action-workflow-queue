@@ -1,5 +1,10 @@
 /* eslint-disable camelcase */
 
+// node modules
+import { inspect } from 'util'
+
+// packages
+import core from '@actions/core'
 import github from '@actions/github'
 
 export default async function ({ octokit, workflow_id, run_id, before }) {
@@ -17,6 +22,9 @@ export default async function ({ octokit, workflow_id, run_id, before }) {
     .filter(run => run.id !== run_id)
     // get older runs
     .filter(run => new Date(run.created_at) < before)
+
+  core.debug(`found ${waiting_for.length} workflow runs`)
+  core.debug(inspect(waiting_for))
 
   return waiting_for
 }

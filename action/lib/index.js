@@ -4,6 +4,7 @@
 import core from '@actions/core'
 import github from '@actions/github'
 
+// modules
 import runs from './runs.js'
 
 // sleep function
@@ -31,7 +32,7 @@ export default async function ({ token, delay, timeout }) {
   let waiting_for = await runs({ octokit, run_id, workflow_id, before })
 
   if (waiting_for.length === 0) {
-    core.info('there is no queue!')
+    core.info('no active run of this workflow found')
     process.exit(0)
   }
 

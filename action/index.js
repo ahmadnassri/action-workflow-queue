@@ -1,6 +1,7 @@
-// packages
+// node modules
 import { inspect } from 'util'
 
+// packages
 import core from '@actions/core'
 import github from '@actions/github'
 
