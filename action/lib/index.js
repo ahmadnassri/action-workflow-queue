@@ -28,6 +28,8 @@ export default async function ({ token, delay, timeout }) {
   // date to check against
   const before = new Date(created_at)
 
+  core.info(`searching for workflow runs before ${before}`)
+
   // get previous runs
   let waiting_for = await runs({ octokit, run_id, workflow_id, before })
 
