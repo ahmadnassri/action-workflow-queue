@@ -19,5 +19,5 @@ inputs:
     default: 10000
 
 runs:
-  using: docker
-  image: docker://ghcr.io/ahmadnassri/action-workflow-queue
+  using: 'docker'
+  image: 'Dockerfile'
