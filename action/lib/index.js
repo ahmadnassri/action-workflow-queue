@@ -49,7 +49,7 @@ export default async function ({ token, delay, timeout }) {
     }
 
     for (const run of waiting_for) {
-      core.info(`waiting for run #${run.id}: current status: ${run.status}`)
+      core.info(`waiting for run: #${run.id} - current status: ${run.status} - URL: ${run.html_url}`)
     }
 
     // zzz
