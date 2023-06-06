@@ -20,13 +20,13 @@ export default async function ({ token, delay, timeout }) {
   const { runId: run_id } = github.context
 
   // get workflow id and created date from run id
-  const { data: { workflow_id, created_at } } = await octokit.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
+  const { data: { workflow_id, run_started_at } } = await octokit.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
     ...github.context.repo,
     run_id
   })
 
   // date to check against
-  const before = new Date(created_at)
+  const before = new Date(run_started_at)
 
   core.info(`searching for workflow runs before ${before}`)
 
