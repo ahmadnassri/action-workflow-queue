@@ -3,7 +3,6 @@ import { inspect } from 'util'
 
 // packages
 import core from '@actions/core'
-import github from '@actions/github'
 
 // modules
 import main from './lib/index.js'
