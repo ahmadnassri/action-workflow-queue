@@ -3,10 +3,7 @@
 If the same workflow is already running from a previous commit, wait for it to finish
 
 [![license][license-img]][license-url]
-[![release][release-img]][release-url]
-[![super linter][super-linter-img]][super-linter-url]
 [![test][test-img]][test-url]
-[![semantic][semantic-img]][semantic-url]
 
 <details>
   <summary><strong>Why?</strong></summary>
@@ -29,8 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: ahmadnassri/action-workflow-queue@v1
+      - uses: joreetz-otto/action-workflow-queue@v2.0.3
 
       # only runs additional steps if there is no other instance of `my-workflow.yml` currently running
 ```
@@ -45,19 +41,10 @@ jobs:
 
 ----
 > Author: [Ahmad Nassri](https://www.ahmadnassri.com/) &bull;
-> Twitter: [@AhmadNassri](https://twitter.com/AhmadNassri)
+> Maintainer: [Jonas Reetz] &bull;
 
 [license-url]: LICENSE
-[license-img]: https://badgen.net/github/license/ahmadnassri/action-workflow-queue
+[license-img]: https://badgen.net/github/license/joreetz-otto/action-workflow-queue
 
-[release-url]: https://github.com/ahmadnassri/action-workflow-queue/releases
-[release-img]: https://badgen.net/github/release/ahmadnassri/action-workflow-queue
-
-[super-linter-url]: https://github.com/ahmadnassri/action-workflow-queue/actions?query=workflow%3Asuper-linter
-[super-linter-img]: https://github.com/ahmadnassri/action-workflow-queue/workflows/super-linter/badge.svg
-
-[test-url]: https://github.com/ahmadnassri/action-workflow-queue/actions?query=workflow%3Atest
-[test-img]: https://github.com/ahmadnassri/action-workflow-queue/workflows/test/badge.svg
-
-[semantic-url]: https://github.com/ahmadnassri/action-workflow-queue/actions?query=workflow%3Arelease
-[semantic-img]: https://badgen.net/badge/📦/semantically%20released/blue
+[test-url]: https://github.com/joreetz-otto/action-workflow-queue/actions?query=workflow%3Atest
+[test-img]: https://github.com/joreetz-otto/action-workflow-queue/workflows/test/badge.svg

@@ -1,8 +1,0 @@
-version: 2.0
-
-id: action-workflow-queue
-
-about:
-  title: "GitHub Action: Workflow Run Wait"
-  description: If the same workflow is already running from a previous commit, wait for it to finish
-  repository: ahmadnassri/action-workflow-queue
