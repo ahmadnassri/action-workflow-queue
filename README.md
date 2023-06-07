@@ -1,4 +1,4 @@
-# GitHub Action: Workflow Run Wait
+# GitHub Action: Workflow Run Queue
 
 If the same workflow is already running from a previous commit, wait for it to finish
 
