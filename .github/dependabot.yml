@@ -1,11 +1,13 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: github-actions
     open-pull-requests-limit: 10
-    directory: /action
+    directory: /
     commit-message:
-      prefix: build
+      prefix: chore
       prefix-development: chore
       include: scope
     schedule:
       interval: daily
+      time: "10:00"
+      timezone: America/Toronto

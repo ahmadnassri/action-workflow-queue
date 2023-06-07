@@ -1,0 +1,25 @@
+# ----------------------------------------------- #
+# Note: this file originates in template-template #
+# ----------------------------------------------- #
+
+DISABLE:
+  - COPYPASTE
+
+DISABLE_LINTERS:
+  - REPOSITORY_TRIVY
+  - SPELL_CSPELL
+  - JSON_PRETTIER
+  - YAML_PRETTIER
+  - JAVASCRIPT_PRETTIER
+
+LOG_LEVEL: INFO
+PRINT_ALPACA: false
+CONFIG_REPORTER: false
+SHOW_ELAPSED_TIME: true
+FLAVOR_SUGGESTIONS: false
+VALIDATE_ALL_CODEBASE: false
+IGNORE_GENERATED_FILES: true
+FILTER_REGEX_EXCLUDE: (dist/*|README.md|test/fixtures/*|vendor/*|/schemas/*)
+
+MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdown-lint.yml
+REPOSITORY_CHECKOV_ARGUMENTS: [--skip-path, schemas]

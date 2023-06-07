@@ -1,0 +1,77 @@
+# ----------------------------------------------- #
+# Note: this file originates in template-template #
+# ----------------------------------------------- #
+
+on: pull_request_target
+
+name: pull_request_target
+
+permissions:
+  pull-requests: write
+  contents: write
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+
+    outputs:
+      repository_is_template: ${{ steps.metadata.outputs.repository_is_template }}
+
+    steps:
+      - uses: actions/checkout@v3.4.0
+
+      - uses: ahmadnassri/action-metadata@v2.1.2
+        id: metadata
+
+  auto-merge:
+    timeout-minutes: 5
+
+    runs-on: ubuntu-latest
+
+    # only run for dependabot PRs
+    if: ${{ github.actor == 'dependabot[bot]' }}
+
+    steps:
+      - id: dependabot
+        uses: dependabot/fetch-metadata@v1.3.6
+        with:
+          github-token: ${{ github.token }}
+
+      - name: auto merge conditions
+        id: auto-merge
+        if: |
+          contains('version-update:semver-minor,version-update:semver-patch', steps.dependabot.outputs.update-type) &&
+          contains('direct:development,indirect:development,direct:production,indirect:production', steps.dependabot.outputs.dependency-type)
+
+        run: echo "::notice ::auto-merge conditions satisfied"
+
+      - name: auto approve pr
+        if: ${{ steps.auto-merge.conclusion == 'success' }}
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --rebase "$PR_URL"
+
+  template-sync:
+    needs: metadata
+
+    timeout-minutes: 20
+
+    runs-on: ubuntu-latest
+
+    # only run for templates
+    if: ${{ needs.metadata.outputs.repository_is_template == 'true' }}
+
+    steps:
+      - uses: actions/checkout@v3.4.0
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: ahmadnassri/action-template-repository-sync@v2.3.4
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
