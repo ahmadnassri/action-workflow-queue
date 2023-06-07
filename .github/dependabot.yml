@@ -1,10 +1,26 @@
+# ---------------------------------------------------- #
+# Note: this file originates in template-action-docker #
+# ---------------------------------------------------- #
+
 version: 2
 updates:
-  - package-ecosystem: github-actions
+  - package-ecosystem: npm
+    open-pull-requests-limit: 10
+    directory: /action
+    commit-message:
+      prefix: build
+      prefix-development: chore
+      include: scope
+    schedule:
+      interval: daily
+      time: "10:00"
+      timezone: America/Toronto
+
+  - package-ecosystem: docker
     open-pull-requests-limit: 10
     directory: /
     commit-message:
-      prefix: chore
+      prefix: build
       prefix-development: chore
       include: scope
     schedule:
