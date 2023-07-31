@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.5.3
 
-      - uses: ahmadnassri/action-commit-lint@v2.1.9
+      - uses: ahmadnassri/action-commit-lint@v2.1.14
         with:
           config: .github/linters/.commit-lint.yml
 
