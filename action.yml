@@ -12,11 +12,11 @@ inputs:
 
   timeout:
     description: timeout before we stop trying (in milliseconds)
-    default: 600000
+    default: "600000"
 
   delay:
     description: delay between status checks (in milliseconds)
-    default: 10000
+    default: "10000"
 
 runs:
   using: docker

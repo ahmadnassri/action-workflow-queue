@@ -4,8 +4,6 @@
 # Note: this file originates in template-action-docker #
 # ---------------------------------------------------- #
 
-SHELL := /bin/bash
-
 pull: ## pull latest containers
 	@docker compose pull
 
@@ -15,14 +13,32 @@ lint: clean ## run mega-linter
 readme: clean ## run readme action
 	@docker compose run --rm readme
 
-start: ## start the project in foreground
-	@docker compose run $(shell env | grep DOCKER | sed -E 's/DOCKER_(.*?)=(.*)/-e \1="\2"/gm;t;d') app
-
 build: clean ## start the project in background
 	@docker compose build --no-cache app
 
 shell: ## start the container shell
 	@docker compose run --rm --entrypoint /bin/sh app
+
+install: ## install all dependencies
+	@docker compose run --rm app install
+
+start: ## start the project in foreground
+	@docker compose run --rm app
+
+test: ## run all npm tests
+	@docker compose run --rm app-test
+
+build-action: clean ## start the project in background
+	@docker compose build --no-cache action
+
+shell-action: ## start the container shell
+	@docker compose run --rm --entrypoint /bin/sh action
+
+start-action: ## start the project in foreground
+	@docker compose run --rm action
+
+test-action: ## start the project in foreground
+	@docker compose run --rm action-test
 
 stop: ## stop all running containers
 	@docker compose down --remove-orphans --rmi local

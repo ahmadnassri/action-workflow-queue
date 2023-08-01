@@ -1,16 +1,48 @@
-FROM node:slim
+# --- base stage --- #
 
-LABEL com.github.actions.name="GitHub Action: Workflow Run Wait" \
-      com.github.actions.description="wait for all `workflow_run` required workflows to be successful" \
-      com.github.actions.icon="clock" \
-      com.github.actions.color="blue" \
-      maintainer="Ahmad Nassri <ahmad@ahmadnassri.com>"
+FROM alpine:3.18 AS base
 
-RUN mkdir /action
+# hadolint ignore=DL3018
+RUN apk add --no-cache --update \
+  nodejs=18.17.0-r0 \
+  git=2.40.1-r0 \
+  openssh=9.3_p2-r0 \
+  ca-certificates=20230506-r0 \
+  ruby-bundler=2.4.15-r0 \
+  bash=5.2.15-r5
+
 WORKDIR /action
 
-COPY action ./
+# --- build stage --- #
 
-RUN npm ci --only=prod
+FROM base AS build
+
+# hadolint ignore=DL3018
+RUN apk add --no-cache npm=9.6.6-r0
+
+# slience npm
+# hadolint ignore=DL3059
+RUN npm config set update-notifier=false audit=false fund=false
+
+# install packages
+COPY package* ./
+RUN npm ci --omit=dev --no-fund --no-audit
+
+# --- app stage --- #
+
+FROM base AS app
+
+# copy from build image
+COPY --from=build /action/node_modules ./node_modules
+
+# copy files
+COPY package.json src ./
+
+WORKDIR /github/workspace/
+
+# hadolint ignore=DL3002
+USER root
+
+HEALTHCHECK NONE
 
 ENTRYPOINT ["node", "/action/index.js"]
