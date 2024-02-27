@@ -7,13 +7,7 @@ import { inspect } from 'util'
 import core from '@actions/core'
 import github from '@actions/github'
 
-export default async function ({ octokit, workflow_id, run_id, before }) {
-  console.log(github.context);
-
-  const branch = github.context.ref.replace('refs/heads/', '')
-  console.log('branch');
-  console.log(branch);
-
+export default async function ({ octokit, workflow_id, run_id, branch, before }) {
   // get current run of this workflow
   const { data: { workflow_runs } } = await octokit.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
     ...github.context.repo,
