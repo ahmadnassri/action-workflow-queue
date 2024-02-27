@@ -8,10 +8,17 @@ import core from '@actions/core'
 import github from '@actions/github'
 
 export default async function ({ octokit, workflow_id, run_id, before }) {
+  console.log(github.context);
+
+  const branch = github.context.ref.replace('refs/heads/', '')
+  console.log('branch');
+  console.log(branch);
+
   // get current run of this workflow
   const { data: { workflow_runs } } = await octokit.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
     ...github.context.repo,
-    workflow_id
+    workflow_id,
+    branch
   })
 
   // find any instances of the same workflow
