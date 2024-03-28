@@ -10,14 +10,11 @@ import runs from './runs.js'
 // sleep function
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export default async function ({ token, delay, timeout }) {
+export default async function ({ token, ref, run_id, delay, timeout }) {
   let timer = 0
 
   // init octokit
   const octokit = github.getOctokit(token)
-
-  // extract runId
-  const { runId: run_id } = github.context
 
   // get workflow id and created date from run id
   const { data: { workflow_id, run_started_at } } = await octokit.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
@@ -31,7 +28,7 @@ export default async function ({ token, delay, timeout }) {
   core.info(`searching for workflow runs before ${before}`)
 
   // get previous runs
-  let waiting_for = await runs({ octokit, run_id, workflow_id, before })
+  let waiting_for = await runs({ octokit, run_id, workflow_ref, before })
 
   if (waiting_for.length === 0) {
     core.info('no active run of this workflow found')

@@ -1,14 +1,23 @@
 name: Workflow Queue
-description: If the same workflow is already running from a previous commit, wait for it to finish
+description: if a given workflow is already running, that this action isn't running as a part of, then wait for it to finish
+
 
 branding:
-  color: yellow
+  color: green
   icon: clock
 
 inputs:
   github-token:
-    description: The GitHub token used to post comments on pull requests
+    description: The GitHub token used to check running workflows.
     default: ${{ github.token }}
+
+  workflow-ref:
+    description: The GitHub workflow ref to queue on.
+    required: true
+
+  run-id:
+    description: The run id of the caller workflow that this action is within.
+    required: true
 
   timeout:
     description: timeout before we stop trying (in milliseconds)
@@ -20,4 +29,4 @@ inputs:
 
 runs:
   using: docker
-  image: docker://ghcr.io/ahmadnassri/action-workflow-queue:1.2.0
+  image: docker://ghcr.io/durable-code/workflow-queue:latest
