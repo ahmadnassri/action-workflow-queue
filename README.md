@@ -41,7 +41,7 @@ jobs:
 | -------------- | -------- | -------------- | ------------------------------------------------------- |
 | `github-token` | ❌       | `github.token` | The GitHub token used to call the GitHub API            |
 | `workflow-ref` | ✅       | -              | The `${{ github.workflow_ref }}` of the caller workflow |
-| `workflow-ref` | ✅       | -              | The `${{ github.run_id }}` of the caller workflow       |
+| `run-id`       | ✅       | -              | The `${{ github.run_id }}` of the caller workflow       |
 | `timeout`      | ❌       | `600000`       | timeout before we stop trying (in milliseconds)         |
 | `delay`        | ❌       | `10000`        | delay between status checks (in milliseconds)           |
 

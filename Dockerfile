@@ -4,12 +4,12 @@ FROM alpine:3.19 AS base
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache --update \
-  nodejs=18.18.2-r0 \
-  git=2.40.1-r0 \
-  openssh=9.3_p2-r0 \
-  ca-certificates=20230506-r0 \
+  nodejs=20.11.1-r0 \
+  git=2.43.0-r0 \
+  openssh=9.6_p1-r0 \
+  ca-certificates=20240226-r0 \
   ruby-bundler=2.4.15-r0 \
-  bash=5.2.15-r5
+  bash=5.2.21-r0
 
 WORKDIR /action
 
@@ -18,7 +18,7 @@ WORKDIR /action
 FROM base AS build
 
 # hadolint ignore=DL3018
-RUN apk add --no-cache npm=9.6.6-r0
+RUN apk add --no-cache npm=10.2.5-r0
 
 # slience npm
 # hadolint ignore=DL3059
